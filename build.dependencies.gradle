@@ -4,6 +4,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.ftclib.ftclib:core:2.1.1' // core
     implementation 'org.firstinspires.ftc:Inspection:11.0.0'
     implementation 'org.firstinspires.ftc:Blocks:11.0.0'
     implementation 'org.firstinspires.ftc:RobotCore:11.0.0'
