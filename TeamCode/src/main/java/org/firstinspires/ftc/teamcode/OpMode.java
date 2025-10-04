@@ -6,14 +6,17 @@ import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Commands.Drive;
 import org.firstinspires.ftc.teamcode.Subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.Subsystems.Vision;
-
+@TeleOp (name = "DefaultTeleOp")
 public class OpMode extends CommandOpMode {
+
     //TODO Make Work
     private GamepadEx controller1, controller2;
     private MotorEx frontLeft, frontRight, backLeft, backRight;
@@ -26,16 +29,15 @@ public class OpMode extends CommandOpMode {
 
         Drivetrain drivetrain = new Drivetrain(
                 new MotorEx(hardwareMap, "FrontLeftMotor"),
-                new MotorEx(hardwareMap, "FrontLeftMotor"),
-                new MotorEx(hardwareMap, "FrontLeftMotor"),
-                new MotorEx(hardwareMap, "FrontLeftMotor"),
-                controller1
+                new MotorEx(hardwareMap, "FrontRightMotor"),
+                new MotorEx(hardwareMap, "BackLeftMotor"),
+                new MotorEx(hardwareMap, "BackRightMotor")
                 );
 
 
         Vision vision = new Vision();
 
-        drivetrain.setDefaultCommand(new Drive(drivetrain));
+        drivetrain.setDefaultCommand(new Drive(drivetrain, controller1));
     }
 
 }
