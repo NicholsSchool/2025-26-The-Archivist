@@ -9,6 +9,7 @@ import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.SerialNumber;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Commands.Drive;
@@ -24,7 +25,8 @@ public class OpMode extends CommandOpMode {
     private Telemetry telemetry;
     @Override
     public void initialize() {
-
+        // Declaration of Driver Controller: controller1
+        // Declaration of Operator Controller: controller2
         GamepadEx controller1 = new GamepadEx(gamepad1); GamepadEx controller2 = new GamepadEx(gamepad2);
 
         Drivetrain drivetrain = new Drivetrain(
@@ -34,10 +36,10 @@ public class OpMode extends CommandOpMode {
                 new MotorEx(hardwareMap, "BackRightMotor")
                 );
 
-
+        // Initialize Vision
         Vision vision = new Vision();
+        vision.init();
 
         drivetrain.setDefaultCommand(new Drive(drivetrain, controller1));
     }
-
 }
