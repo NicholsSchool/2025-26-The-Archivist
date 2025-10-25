@@ -2,13 +2,12 @@ package org.firstinspires.ftc.teamcode.Commands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Subsystems.VisionSubsystem;
 
-public class GetAprilTags extends CommandBase
+public class GetPurpleBallColorDetection extends CommandBase
 {
     VisionSubsystem vision;
-    public GetAprilTags(VisionSubsystem vision)
+    public GetPurpleBallColorDetection(VisionSubsystem vision)
     {
         this.vision = vision;
 
@@ -18,6 +17,6 @@ public class GetAprilTags extends CommandBase
     @Override
     public void execute()
     {
-        vision.getAprilTags();
+        vision.getBallColorDetector('P');
     }
 }

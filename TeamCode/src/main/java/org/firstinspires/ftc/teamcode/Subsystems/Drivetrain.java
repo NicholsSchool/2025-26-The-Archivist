@@ -12,7 +12,6 @@ public class Drivetrain extends SubsystemBase {
 
     private MecanumDrive mecanum;
     private MotorEx frontLeft, frontRight, backLeft, backRight;
-    private GyroEx gyro;
 
     public Drivetrain(MotorEx frontLeft, MotorEx frontRight, MotorEx backLeft, MotorEx backRight)
     {
@@ -21,8 +20,6 @@ public class Drivetrain extends SubsystemBase {
         this.frontRight = frontRight;
         this.backLeft = backLeft;
         this.backRight = backRight;
-
-        this.gyro = gyro;
 
         frontLeft.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
@@ -34,8 +31,6 @@ public class Drivetrain extends SubsystemBase {
         backLeft.setInverted(true);
         backRight.setInverted(true);
 
-//        gyro.init();
-
        mecanum = new MecanumDrive(frontLeft, frontRight, backLeft, backRight);
 
     }
@@ -44,7 +39,6 @@ public class Drivetrain extends SubsystemBase {
     public void periodic()
     {
         // This method will be called once per scheduler run
-
     }
 
     public void drive(DoubleSupplier forward, DoubleSupplier strafe, DoubleSupplier turn)
@@ -57,10 +51,12 @@ public class Drivetrain extends SubsystemBase {
         mecanum.driveWithMotorPowers(frontLeft, frontRight, backLeft, backRight);
     }
 
-    public void driveFieldOriented(DoubleSupplier forward, DoubleSupplier strafe, DoubleSupplier turn)
+    public void driveFieldOriented(DoubleSupplier forward, DoubleSupplier strafe, DoubleSupplier turn, Double heading)
     {
-        mecanum.driveFieldCentric(strafe.getAsDouble(), forward.getAsDouble(), turn.getAsDouble(), gyro.getHeading());
+        mecanum.driveFieldCentric(strafe.getAsDouble(), forward.getAsDouble(), turn.getAsDouble(), heading);
     }
+
+    // Valid Motors that can be called
     public enum motor
     {
         FRONT_LEFT_MOTOR,
@@ -68,6 +64,8 @@ public class Drivetrain extends SubsystemBase {
         BACK_LEFT_MOTOR,
         BACK_RIGHT_MOTOR
     }
+
+    // Gets the Acceleration of the Input Motor
     public double getMotorAccel(motor motor)
     {
         switch(motor)
@@ -80,7 +78,21 @@ public class Drivetrain extends SubsystemBase {
         }
 
     }
+    // Gets the Power of the Input Motor
+    public double getMotorPower(motor motor)
+    {
+        switch(motor)
+        {
+            case FRONT_LEFT_MOTOR: return frontLeft.get();
+            case FRONT_RIGHT_MOTOR: return frontRight.get();
+            case BACK_LEFT_MOTOR: return backLeft.get();
+            case BACK_RIGHT_MOTOR: return backRight.get();
+            default: throw new IllegalStateException("Invalid Motor Selection");
+        }
 
+    }
+
+    // Get the Velocity of the Input Motor in ticks per second
     public double getMotorVel(motor motor)
     {
         switch(motor)
@@ -93,4 +105,41 @@ public class Drivetrain extends SubsystemBase {
         }
     }
 
+    // Get the Rate of the Encoder of the Input Motor
+    public double getMotorRate(motor motor)
+    {
+        switch(motor)
+        {
+            case FRONT_LEFT_MOTOR: return frontLeft.getRate();
+            case FRONT_RIGHT_MOTOR: return frontRight.getRate();
+            case BACK_LEFT_MOTOR: return backLeft.getRate();
+            case BACK_RIGHT_MOTOR: return backRight.getRate();
+            default: throw new IllegalStateException("Invalid Motor Selection");
+        }
+    }
+
+    // Gets the counts per revolution of the Input Motor
+    public double getMotorCPR(motor motor)
+    {
+        switch(motor)
+        {
+            case FRONT_LEFT_MOTOR: return frontLeft.getCPR();
+            case FRONT_RIGHT_MOTOR: return frontRight.getCPR();
+            case BACK_LEFT_MOTOR: return backLeft.getCPR();
+            case BACK_RIGHT_MOTOR: return backRight.getCPR();
+            default: throw new IllegalStateException("Invalid Motor Selection");
+        }
+    }
+    // Gets the distance travelled of the Encoder of the Input Motor
+    public double getMotorDistance(motor motor)
+    {
+        switch(motor)
+        {
+            case FRONT_LEFT_MOTOR: return frontLeft.getDistance();
+            case FRONT_RIGHT_MOTOR: return frontRight.getDistance();
+            case BACK_LEFT_MOTOR: return backLeft.getDistance();
+            case BACK_RIGHT_MOTOR: return backRight.getDistance();
+            default: throw new IllegalStateException("Invalid Motor Selection");
+        }
+    }
 }

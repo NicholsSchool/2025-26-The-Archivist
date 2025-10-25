@@ -5,12 +5,15 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Subsystems.VisionSubsystem;
 
-public class GetAprilTags extends CommandBase
+public class GetAprilTag extends CommandBase
 {
     VisionSubsystem vision;
-    public GetAprilTags(VisionSubsystem vision)
+    int aprilTagID;
+
+    public GetAprilTag(VisionSubsystem vision, int aprilTagID)
     {
         this.vision = vision;
+        this.aprilTagID = aprilTagID;
 
         addRequirements(vision);
     }
@@ -18,6 +21,9 @@ public class GetAprilTags extends CommandBase
     @Override
     public void execute()
     {
-        vision.getAprilTags();
+        if (vision.isAprilTag(aprilTagID))
+        {
+            vision.getAprilTags();
+        }
     }
 }

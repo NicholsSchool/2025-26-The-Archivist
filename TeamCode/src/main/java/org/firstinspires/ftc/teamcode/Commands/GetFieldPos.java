@@ -5,18 +5,18 @@ import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.arcrobotics.ftclib.geometry.Rotation2d;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Drivetrain;
-import org.firstinspires.ftc.teamcode.Subsystems.PodOdometry;
+import org.firstinspires.ftc.teamcode.Subsystems.GoBildaOdometrySubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.VisionSubsystem;
 
 public class GetFieldPos extends CommandBase
 {
     VisionSubsystem vision;
     Drivetrain driveTrain;
-    PodOdometry odometry;
+    GoBildaOdometrySubsystem odometry;
     Rotation2d robotAngle;
     Pose2d robotPos;
 
-    public GetFieldPos(VisionSubsystem vision, Drivetrain driveTrain, PodOdometry odometry)
+    public GetFieldPos(VisionSubsystem vision, Drivetrain driveTrain, GoBildaOdometrySubsystem odometry)
     {
         this.vision = vision;
         this.driveTrain = driveTrain;

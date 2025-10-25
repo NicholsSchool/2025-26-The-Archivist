@@ -2,34 +2,25 @@ package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
-import com.arcrobotics.ftclib.gamepad.GamepadEx;
-import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-//import org.firstinspires.ftc.teamcode.Commands.Sauce;
-import org.firstinspires.ftc.teamcode.Commands.Drive;
 import org.firstinspires.ftc.teamcode.Commands.GetAprilTags;
-import org.firstinspires.ftc.teamcode.Commands.Sauce;
 import org.firstinspires.ftc.teamcode.Subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.Subsystems.GoBildaOdometrySubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.TelemetrySubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.VisionSubsystem;
 
-//import org.firstinspires.ftc.teamcode.Subsystems.Vision;
-@TeleOp (name = "BasicTeleOp")
-public class BasicTeleOp extends CommandOpMode
+public class BasicAuto extends CommandOpMode
 {
-    //TODO Make Work
-//    private Limelight3A vision;
     private TelemetrySubsystem telemetrySubsystem;
     private VisionSubsystem visionSubsystem;
     private Limelight3A vision;
     private GoBildaOdometrySubsystem goBildaOdometrySubsystem;
     @Override
-    public void initialize() {
+    public void initialize()
+    {
         CommandScheduler.getInstance().run();
 
         goBildaOdometrySubsystem = new GoBildaOdometrySubsystem(hardwareMap.get(GoBildaPinpointDriver.class, "Odometry"));
@@ -37,10 +28,6 @@ public class BasicTeleOp extends CommandOpMode
         // Initialize Limelight3A for Vision
         vision = hardwareMap.get(Limelight3A.class, "Limelight3A");
         visionSubsystem = new VisionSubsystem(vision);
-
-        // Declaration of Driver Controller: controller1
-        // Declaration of Operator Controller: controller2
-        GamepadEx controller1 = new GamepadEx(gamepad1); GamepadEx controller2 = new GamepadEx(gamepad2);
 
         // Initialize DriveTrain
         Drivetrain drivetrain = new Drivetrain(
@@ -52,10 +39,6 @@ public class BasicTeleOp extends CommandOpMode
 
         // Initialize Telemetry Subsystem
         telemetrySubsystem = new TelemetrySubsystem(drivetrain, visionSubsystem, telemetry, goBildaOdometrySubsystem);
-
-        drivetrain.setDefaultCommand(new Drive(drivetrain, () -> controller1.getLeftY(), () -> controller1.getLeftX(), () -> controller1.getRightX()));
-
-        controller1.getGamepadButton(GamepadKeys.Button.Y).toggleWhenPressed(new Sauce(drivetrain, visionSubsystem, goBildaOdometrySubsystem, () -> controller1.getLeftY(), () -> controller1.getLeftX(), () -> controller1.getRightX()));
 
         // Periodically Called Subsystems
         register(
